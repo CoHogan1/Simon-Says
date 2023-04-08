@@ -34,7 +34,7 @@ function App() {
 
         let flashSequence = setInterval(()=> {
             console.log("interval started");
-            if (i >= index){ clearInterval(flashSequence) }
+            if (i > index){ clearInterval(flashSequence) }
             let curr = gameOrder[i]
             animation[curr]()
             i++
@@ -44,7 +44,7 @@ function App() {
         let endSequence = setTimeout(()=>{
             console.log('play pattern timeout success');
             clearInterval(flashSequence)
-        }, second * index + second);
+        }, second * index + 400);
     }
 
     const generateRandomColor = () => {
@@ -55,15 +55,15 @@ function App() {
         for (let i = 0; i < 20; i++){
             gameOrder.push(generateRandomColor())
         }
-        //return gameOrder
     }
-
 
     const addPlayerMove = (e) => {
         e.preventDefault()
         if (index > 20) endRound(); // may not need this.
         playerOrder.push(e.target.id)// pushes color name. ->'red
         animation[e.target.id]()
+        // here
+        // checkSequence()
     }
 
     const checkSequence = () => {
@@ -72,7 +72,7 @@ function App() {
             if (!playerOrder[i] === gameOrder[i]) {
                 console.log('mistake, round ended');
                 endRound();
-                return; // end function
+                return;
             }
         }
         console.log("hurray");
